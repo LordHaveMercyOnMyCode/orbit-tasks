@@ -1,5 +1,7 @@
 import { setIsDarkMode, setIsSidebarCollapsed } from "@/lib/store/state";
+import { useGetAuthUserQuery } from "@/lib/store/state/api";
 import { useAppDispatch, useAppSelector } from "@/lib/store/store";
+import { signOut } from "aws-amplify/auth";
 import { Menu, Moon, Search, Settings, Sun, User } from "lucide-react";
 import Link from "next/link";
 
@@ -9,6 +11,18 @@ const Navbar = () => {
     (state) => state.global.isSidebarCollapsed,
   );
   const isDarkMode = useAppSelector((state) => state.global.isDarkMode);
+
+  const { data: currentUser } = useGetAuthUserQuery({});
+
+  if (!currentUser) return null;
+  const currentUserDetails = currentUser.userDetails;
+  const handleSignOut = async () => {
+    try {
+      await signOut();
+    } catch (error) {
+      console.log("Error signin out: ", error);
+    }
+  };
 
   return (
     <>
@@ -67,8 +81,13 @@ const Navbar = () => {
             <div className="align-center flex h-9 w-9 justify-center">
               <User className="h-6 w-6 cursor-pointer self-center rounded-full dark:text-white" />
             </div>
-            <span className="mx-3 text-gray-800 dark:text-white">Akash</span>
-            <button className="hidden rounded bg-blue-400 px-4 py-2 text-xs font-bold text-white hover:bg-blue-500 md:block">
+            <span className="mx-3 text-gray-800 dark:text-white">
+              {currentUserDetails.username}
+            </span>
+            <button
+              onClick={handleSignOut}
+              className="hidden rounded bg-blue-400 px-4 py-2 text-xs font-bold text-white hover:bg-blue-500 md:block"
+            >
               Sign out
             </button>
           </div>
