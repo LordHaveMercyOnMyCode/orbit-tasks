@@ -102,6 +102,7 @@ export const api = createApi({
           const userDetails = userDetailsResponse.data as User;
 
           return { data: { user, userSub, userDetails, accessToken } };
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
         } catch (error: any) {
           console.error("Error while fetching Auth user", error);
           return { error: error.message || "Could not fetch user data" };
