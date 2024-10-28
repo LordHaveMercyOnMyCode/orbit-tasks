@@ -19,9 +19,3 @@ Backend: node.js, express.js, typescript, postgresql, prisma orm, aws (EC2, S3, 
 -   `react-dnd react-dnd-html5-backend` : For complex drag and drop
 -   `gantt-task-react` : Interactive gantt charts
 
-
-### Flow Diagram Backend
-![Flow Diagram](./flow-diagram.png)
-
-### AWS Architecture Backend
-![AWS Architechture](./pm.png)
